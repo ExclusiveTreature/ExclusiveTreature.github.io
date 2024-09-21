@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<title>Our Love Story</title>
+	<link rel="icon" href="image/logo.ico" sizes="32x32">
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<style type="text/css">
+		@font-face {
+			font-family: digit;
+			src: url('digital-7_mono.ttf') format("truetype");
+		}
+
+		/*模态框的样式*/
+		.modal {
+			position: fixed;
+			font-family: Arial, Helvetica, sans-serif;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			background: rgba(0, 0, 0, 0.8);
+			z-index: 99999;
+			opacity: 1;
+			-webkit-transition: opacity 400ms ease-in;
+			-moz-transition: opacity 400ms ease-in;
+			transition: opacity 400ms ease-in;
+			pointer-events: auto;
+		}
+
+		.none {
+			opacity: 0;
+			pointer-events: none;
+		}
+
+		.modal>div {
+			width: 400px;
+			position: relative;
+			margin: 10% auto;
+			padding: 5px 20px 13px 20px;
+			border-radius: 10px;
+			background: #fff;
+			background: -moz-linear-gradient(#fff, #999);
+			background: -webkit-linear-gradient(#fff, #999);
+			background: -o-linear-gradient(#fff, #999);
+		}
+
+		.yes,
+		.no {
+			background: #606061;
+			color: #FFFFFF;
+			line-height: 25px;
+			position: absolute;
+			right: -12px;
+			text-align: center;
+			top: -10px;
+			width: 24px;
+			text-decoration: none;
+			font-weight: bold;
+			-webkit-border-radius: 12px;
+			-moz-border-radius: 12px;
+			border-radius: 12px;
+			-moz-box-shadow: 1px 1px 3px #000;
+			-webkit-box-shadow: 1px 1px 3px #000;
+			box-shadow: 1px 1px 3px #000;
+		}
+
+		.no {
+			right: 24px;
+		}
+
+		.yes:hover,
+		.no:hover {
+			background: #00d9ff;
+		}
+	</style>
+	<link href="css/default.css" type="text/css" rel="stylesheet">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/garden.js"></script>
+	<script type="text/javascript" src="js/functions.js"></script>
+</head>
+
+<body>
+	<div id="mainDiv">
+		<div id="content">
+			<div id="code">
+				<span class="comments">亲爱的藏宝儿：</span><br />
+				<span class="space" /><span class="comments">我会牵着你的手，走到我们满头白发的那一天</span><br />
+				<span class="space" /><span class="comments">我会守护你生命里的精彩，并陪伴你一路精彩下去。</span><br />
+				<span class="space" /><span class="comments">你的幸福快乐，是我一生的追求。</span><br />
+				<br />
+				<span class="space" />我会每一天带着笑脸，和你说早安，<br />
+				<span class="space" />我会每一晚与你道声晚安再入梦乡，<br />
+				<span class="space" />我会带你去所有你想去的地方，<br />
+				<span class="space" />陪你闹看你笑<br />
+				<span class="space" />历经你生命中所有的点点滴滴。<br />
+				<br />
+				<span class="space" />我期待这一生与你一起走过，<br />
+				<span class="space" />走到尽头再回头看尽一生铅华满地，<br />
+				<span class="space" />我期待与你慢慢变老，<br />
+				<span class="space" />等我们老到哪儿也去不了，<br />
+				<span class="space" />还能满载着一生的幸福快乐。<br />
+				<br />
+				  <span class="keyword">我愿意爱你直到老去，<br />
+					<span class="space" />我会为我们的未来撑起一片天空，<br />
+					<span class="space" />为我们的将来担负起一生的责任，<br />
+					<span class="space" />愿意为你去做每一件能让你开心快乐的事。<br />
+					<span class="space" />所有我们经历的点点滴滴，<br />
+					<span class="space" />都是我们一辈子最美的回忆。</span> <br />
+				<br />
+			</div>
+			<div id="loveHeart">
+				<canvas id="garden"></canvas>
+				<div id="words">
+					<div id="messages">
+						亲爱的，这是我们相爱在一起的时光。
+						<div id="elapseClock"></div>
+					</div>
+					<div id="loveu">
+						爱你直到永永远远。<br />
+						<div class="signature">-- 胡先生</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<audio id="bgm" loop="loop" src="./audio/marryMeBgm.mp3"></audio>
+
+	<!--模态框-->
+	<div id="modal" class="none">
+		<div>
+			<span id="yes" onclick="yesFunc()" title="YES" class="yes">是</span>
+			<span id="no" onclick="noFunc()" title="NO" class="no">否</span>
+			<h2>提示信息：</h2>
+			<p>是否允许本页中的音/视频自动播放？</p>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var offsetX = $("#loveHeart").width() / 2;
+		var offsetY = $("#loveHeart").height() / 2 - 55;
+		var together = new Date();
+		together.setFullYear(2024, 6, 12);
+		together.setHours(9);
+		together.setMinutes(44);
+		together.setSeconds(0);
+		together.setMilliseconds(0);
+
+		if (!document.createElement('canvas').getContext) {
+			var msg = document.createElement("div");
+			msg.id = "errorMsg";
+			msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+";
+			document.body.appendChild(msg);
+			$("#code").css("display", "none")
+			$("#copyright").css("position", "absolute");
+			$("#copyright").css("bottom", "10px");
+			document.execCommand("stop");
+		} else {
+			setTimeout(function () {
+				startHeartAnimation();
+			}, 5000);
+
+			timeElapse(together);
+			setInterval(function () {
+				timeElapse(together);
+			}, 500);
+
+			adjustCodePosition();
+			$("#code").typewriter();
+		}
+		function yesFunc() { //选择是
+			var oA = document.querySelector("#bgm");
+			var oModal = document.querySelector("#modal");
+			oModal.className = "none"; //隐藏模态框
+			var timer = null;
+
+			function autoPlay() { //自动播放函数
+				if (oA.paused) { //判读是否暂停
+					oA.paused = false;
+					oA.volume = 0.1;
+					oA.play();
+				} else {
+					clearInterval(timer);
+				}
+			}
+			timer = setInterval(autoPlay, 1); //执行自动播放
+		};
+		function noFunc() { //选择否
+			var oModal = document.querySelector("#modal");
+			oModal.className = "none"; //隐藏模态框，无自动播放
+		}
+		window.onload = function () {
+			var oModal = document.querySelector("#modal");
+			var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+			//chrome下的判断
+			console.log(userAgent);
+			
+			if (userAgent.indexOf("Chrome") > -1 || userAgent.indexOf("Firefox") > -1) { //判断是否是Chrome浏览器
+				//alert("我是 Chrome");
+				oModal.className = "modal";
+			}
+		}
+	</script>
+</body>
+
+</html>
